@@ -88,3 +88,26 @@ objdump -d -M intel -C test.o
   2d:   c3                      ret
 ```
 
+## 2.21 バイナリファイルをプログラムに埋め込め
+
+- objcopy -I binary でバイナリファイルをオブジェクトファイル形式に変換できる
+
+```sh
+objcopy -I binary -O elf64-x86-64 -B i386:x86-64 test.bin test.o
+```
+
+## 2.22 objcopy が何をするか確認せよ
+
+- objcopyはバイナリデータがメモリに配置された場合の開始アドレス、終了アドレス、バイト数の三つの情報を持ったオブジェクトファイルを生成する。
+- nmはオブジェクトファイルのシンボルのリストを表示する
+
+```sh
+nm test.o
+```
+
+```
+00000000000088f8 D _binary__bin_cat_end   -- 終了アドレス
+00000000000088f8 A _binary__bin_cat_size  -- バイナリデータのバイト数
+0000000000000000 D _binary__bin_cat_start -- 開始アドレス
+```
+
